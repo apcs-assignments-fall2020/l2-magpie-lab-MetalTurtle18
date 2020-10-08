@@ -64,6 +64,18 @@ public class Magpie
         else if (findWord(statement, "abcdefg") >= 0) {
             response = "hijklmnopqrstuvwxyz";
         }
+        else if (findWord(statement, "I want") >= 0 && findWord(statement, "I want to") == -1) {
+            response = transformIWantStatement(statement);
+        }
+        else if (findWord(statement, "I") >= 0 && findWord(statement, "you") >= 0 && findWord(statement, "I") < findWord(statement, "you")) {
+            response = transformIYouStatement(statement);
+        }
+        else if (findWord(statement, "I want to") >= 0) {
+            response = transformIWantToStatement(statement);
+        }
+        else if (findWord(statement, "you") >= 0 && findWord(statement, "me") >= 0 && findWord(statement, "you") < findWord(statement, "me")) {
+            response = transformYouMeStatement(statement);
+        }
         else
         {
             response = getRandomResponse();
@@ -135,10 +147,8 @@ public class Magpie
      * @param statement the user statement, assumed to contain "I want"
      * @return the transformed statement
      */
-    public String transformIWantStatement(String statement)
-    {
-        //your code here
-        return "";
+    public String transformIWantStatement(String statement) {
+        return "Would you really be happy if you had " + statement.substring(7) + "?";
     }
 
     /**
@@ -147,10 +157,8 @@ public class Magpie
      * @param statement the user statement, assumed to contain "I" followed by "you"
      * @return the transformed statement
      */
-    public String transformIYouStatement(String statement)
-    {
-        //your code here
-        return "";
+    public String transformIYouStatement(String statement) {
+        return "Why do you " + statement.substring(2, findWord(statement, "you")) + "me?";
     }
 
     /**
@@ -159,10 +167,8 @@ public class Magpie
      * @param statement the user statement, assumed to contain "I want to"
      * @return the transformed statement
      */
-    public String transformIWantToStatement(String statement)
-    {
-        // your code here
-        return "";
+    public String transformIWantToStatement(String statement) {
+        return "What would it mean to " + statement.substring(10) + "?";
     }
 
 
@@ -174,9 +180,7 @@ public class Magpie
      * @param statement the user statement, assumed to contain "you" followed by "me"
      * @return the transformed statement
      */
-    public String transformYouMeStatement(String statement)
-    {
-        // your code here
-        return "";
+    public String transformYouMeStatement(String statement) {
+        return "What makes you think that I " + statement.substring(findWord(statement, "you") + 4, findWord(statement, "me")) + "you?";
     }
 }
